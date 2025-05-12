@@ -1,6 +1,7 @@
 //simple node server
 const http=require('http');
 const fs=require('fs');
+const { URLSearchParams } = require('url');
 
 
 const server=http.createServer((req,res)=>{
@@ -32,9 +33,11 @@ const server=http.createServer((req,res)=>{
     body.push(chunk);
      });
      req.on('end',()=>{
-const fullBody=Buffer.concat(body).toString();
-console.log(fullBody);
-
+ const fullBody=Buffer.concat(body).toString();
+// console.log(fullBody);
+const params=new URLSearchParams(fullBody);
+const bodyObject=Object.fromEntries(params);
+console.log(bodyObject);
      })
 fs.writeFileSync('file.txt',"PRASAD");
 res.statusCode=302;
