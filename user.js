@@ -1,10 +1,10 @@
 //simple node server
-const http=require('http');
+
 const fs=require('fs');
 const { URLSearchParams } = require('url');
 
 
-const server=http.createServer((req,res)=>{
+const userHandle=(req,res)=>{
   console.log(req.url,req.method,req.headers);
   if (req.url === '/') {
     res.setHeader('Content-Type', 'text/html');
@@ -38,8 +38,8 @@ const server=http.createServer((req,res)=>{
 const params=new URLSearchParams(fullBody);
 const bodyObject=Object.fromEntries(params);
 console.log(bodyObject);
-     })
-fs.writeFileSync('file.txt',"PRASAD");
+  fs.writeFileSync('file.txt',JSON.stringify(bodyObject) )  })
+
 res.statusCode=302;
 res.setHeader('Location','/');
   }
@@ -58,8 +58,5 @@ return res.end();
  res.write('<body><h1>Welcome to Backend</h1></body>');
  res.write('</html>');
  return res.end();
-});
-const PORT=3001;
-server.listen(PORT,()=>{
-  console.log(`Server running on http://localhost:${PORT}`);
-});
+};
+module.exports=userHandle;
